@@ -89,7 +89,7 @@ struct Landmark: Codable {
     var location: Coordinate
     var vantagePoints: [Coordinate]
 
-    enum CodingKeys: String, CodingKey, CaseIterable {
+    enum enum CodingKeys: String, CodingKey {
         case name = "title"
         case foundingYear = "founding_date"
         case location
@@ -138,7 +138,7 @@ struct Coordinate {
     var longitude: Double
     var elevation: Double
 
-    enum CodingKeys: String, CodingKey, CaseIterable {
+    enum enum CodingKeys: String, CodingKey {
         case latitude
         case longitude
         case additionalInfo
