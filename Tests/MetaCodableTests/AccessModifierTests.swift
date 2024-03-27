@@ -28,7 +28,7 @@ final class AccessModifierTests: XCTestCase {
                         try container.encode(self.value, forKey: CodingKeys.value)
                     }
 
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -76,7 +76,7 @@ final class AccessModifierTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -118,7 +118,7 @@ final class AccessModifierTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -162,7 +162,7 @@ final class AccessModifierTests: XCTestCase {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                         }
                     }

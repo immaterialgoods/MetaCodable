@@ -166,7 +166,7 @@ final class IgnoreInitializedTests: XCTestCase {
                 }
 
                 extension SomeEnum {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case bool = "bool"
                         case int = "altInt"
                         case string = "altString"
@@ -260,7 +260,7 @@ final class IgnoreInitializedTests: XCTestCase {
                 }
 
                 extension SomeEnum {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case bool = "bool"
                         case int = "altInt"
                         case string = "altString"
@@ -310,7 +310,7 @@ final class IgnoreInitializedTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                     }
                 }
@@ -348,7 +348,7 @@ final class IgnoreInitializedTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                     }
                 }
@@ -386,7 +386,7 @@ final class IgnoreInitializedTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                     }
                 }

@@ -53,7 +53,7 @@ final class IgnoreCodingTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case two = "two"
                     }
                 }
@@ -219,7 +219,7 @@ final class IgnoreCodingTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                     }
                 }
@@ -265,7 +265,7 @@ final class IgnoreCodingTests: XCTestCase {
                 }
 
                 extension SomeEnum {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case variableBool = "variableBool"
                         case bool = "bool"
                     }
@@ -306,7 +306,7 @@ final class IgnoreCodingTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                         case two = "two"
                     }
@@ -356,7 +356,7 @@ final class IgnoreCodingTests: XCTestCase {
                 }
 
                 extension SomeEnum {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case variableBool = "variableBool"
                     }
                     enum DecodingKeys: String, CodingKey {
@@ -416,7 +416,7 @@ final class IgnoreCodingTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                         case deeply = "deeply"
                         case nested = "nested"
@@ -471,7 +471,7 @@ final class IgnoreCodingTests: XCTestCase {
                         try nested_deeply_container.encode(self.two, forKey: CodingKeys.two)
                     }
 
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                         case deeply = "deeply"
                         case nested = "nested"
@@ -555,7 +555,7 @@ final class IgnoreCodingTests: XCTestCase {
                 }
 
                 extension SomeEnum {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case val = "val"
                         case int = "altInt"
                         case variable = "variable"

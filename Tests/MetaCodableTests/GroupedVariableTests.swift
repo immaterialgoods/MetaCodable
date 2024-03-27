@@ -44,7 +44,7 @@ final class GroupedVariableTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                         case two = "two"
                         case three = "three"
@@ -92,7 +92,7 @@ final class GroupedVariableTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                         case two = "two"
                         case three = "three"
@@ -129,7 +129,7 @@ final class GroupedVariableTests: XCTestCase {
     //                     try container.encode(self.one, forKey: CodingKeys.one)
     //                     try container.encode(self.two, forKey: CodingKeys.two)
     //                 }
-    //                 enum CodingKeys: String, CodingKey {
+    //                 enum CodingKeys: String, CodingKey, CaseIterable {
     //                     case one = "one"
     //                     case two = "two"
     //                 }
@@ -180,7 +180,7 @@ final class GroupedVariableTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                         case two = "two"
                         case three = "three"
@@ -228,7 +228,7 @@ final class GroupedVariableTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                         case two = "two"
                         case three = "three"
@@ -276,7 +276,7 @@ final class GroupedVariableTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                         case two = "two"
                         case three = "three"

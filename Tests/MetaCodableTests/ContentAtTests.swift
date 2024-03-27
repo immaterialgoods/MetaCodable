@@ -108,7 +108,7 @@ final class ContentAtTests: XCTestCase {
                 }
 
                 extension Command {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case type = "type"
                         case content = "content"
                         case key = "key"
@@ -185,7 +185,7 @@ final class ContentAtTests: XCTestCase {
                 }
 
                 extension Command {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case type = "type"
                         case content = "content"
                         case key = "key"
@@ -262,7 +262,7 @@ final class ContentAtTests: XCTestCase {
                 }
 
                 extension Command {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case type = "type"
                         case content = "content"
                         case key = "key"

@@ -37,7 +37,7 @@ final class GenericsTests: XCTestCase {
                 }
 
                 extension GenericCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -82,7 +82,7 @@ final class GenericsTests: XCTestCase {
                 }
 
                 extension GenericCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value1 = "value1"
                         case value2 = "value2"
                         case value3 = "value3"
@@ -153,7 +153,7 @@ final class GenericsTests: XCTestCase {
                 }
 
                 extension GenericCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case one = "one"
                         case two = "two"
                         case three = "three"
@@ -201,7 +201,7 @@ final class GenericsTests: XCTestCase {
                 }
 
                 extension GenericCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                         case str = "str"
                     }
@@ -237,7 +237,7 @@ final class GenericsTests: XCTestCase {
                         try container.encode(self.str, forKey: CodingKeys.str)
                     }
 
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                         case str = "str"
                     }
@@ -305,7 +305,7 @@ final class GenericsTests: XCTestCase {
                 }
 
                 extension GenericCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case two = "two"
                     }
                     enum DecodingKeys: String, CodingKey {
@@ -348,7 +348,7 @@ final class GenericsTests: XCTestCase {
                 }
 
                 extension GenericCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case str = "str"
                     }
                 }
@@ -390,7 +390,7 @@ final class GenericsTests: XCTestCase {
                 }
 
                 extension GenericCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                         case str = "str"
                     }
@@ -432,7 +432,7 @@ final class GenericsTests: XCTestCase {
                 }
 
                 extension GenericCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                         case str = "str"
                     }
@@ -468,7 +468,7 @@ final class GenericsTests: XCTestCase {
                         try container.encode(self.str, forKey: CodingKeys.str)
                     }
 
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                         case str = "str"
                     }
@@ -536,7 +536,7 @@ final class GenericsTests: XCTestCase {
                 }
 
                 extension GenericCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case two = "two"
                     }
                     enum DecodingKeys: String, CodingKey {

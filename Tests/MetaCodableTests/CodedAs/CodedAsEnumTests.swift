@@ -243,7 +243,7 @@ final class CodedAsEnumTests: XCTestCase {
                 }
 
                 extension Command {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case type = "type"
                         case key = "key"
                         case value = "value"
@@ -362,7 +362,7 @@ final class CodedAsEnumTests: XCTestCase {
                 }
 
                 extension SomeEnum {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case variable = "variable"
                         case bool = "bool"
                         case val = "val"
@@ -475,7 +475,7 @@ final class CodedAsEnumTests: XCTestCase {
                 }
 
                 extension SomeEnum {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case type = "type"
                         case variable = "variable"
                         case val = "val"

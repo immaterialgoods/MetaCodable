@@ -36,7 +36,7 @@ final class VariableDeclarationTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -81,7 +81,7 @@ final class VariableDeclarationTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -249,7 +249,7 @@ final class VariableDeclarationTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value1 = "value1"
                         case value2 = "value2"
                     }
@@ -322,7 +322,7 @@ final class VariableDeclarationTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value1 = "value1"
                         case value2 = "value2"
                     }
@@ -408,7 +408,7 @@ final class VariableDeclarationTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -450,7 +450,7 @@ final class VariableDeclarationTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }

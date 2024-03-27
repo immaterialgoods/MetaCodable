@@ -39,7 +39,7 @@ final class CodableTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -80,7 +80,7 @@ final class CodableTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -116,7 +116,7 @@ final class CodableTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -155,7 +155,7 @@ final class CodableTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -235,7 +235,7 @@ final class CodableTests: XCTestCase {
                         try super.encode(to: encoder)
                     }
 
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }

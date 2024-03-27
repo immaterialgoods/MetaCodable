@@ -45,7 +45,7 @@ final class CodedInDefaultTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -93,7 +93,7 @@ final class CodedInDefaultTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -146,7 +146,7 @@ final class CodedInDefaultTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                         case nested = "nested"
                     }
@@ -200,7 +200,7 @@ final class CodedInDefaultTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                         case nested = "nested"
                     }
@@ -259,7 +259,7 @@ final class CodedInDefaultTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                         case deeply = "deeply"
                         case nested = "nested"
@@ -319,7 +319,7 @@ final class CodedInDefaultTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                         case deeply = "deeply"
                         case nested = "nested"
@@ -400,7 +400,7 @@ final class CodedInDefaultTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value1 = "value1"
                         case deeply = "deeply"
                         case nested = "nested"
@@ -495,7 +495,7 @@ final class CodedInDefaultTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value1 = "value1"
                         case value4 = "deeply"
                         case value3 = "nested"
@@ -576,7 +576,7 @@ final class CodedInDefaultTests: XCTestCase {
                         try level_value3_value4_container.encodeIfPresent(self.value2, forKey: CodingKeys.value2)
                     }
 
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value1 = "value1"
                         case value4 = "deeply"
                         case value3 = "nested"

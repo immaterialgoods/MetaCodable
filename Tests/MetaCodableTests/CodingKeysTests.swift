@@ -78,7 +78,7 @@ final class CodingKeysTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case productName = "ProductName"
                         case productCost = "ProductCost"
                         case description = "Description"
@@ -150,7 +150,7 @@ final class CodingKeysTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case productName = "ProductName"
                         case productCost = "ProductCost"
                         case description = "Description"
@@ -198,7 +198,7 @@ final class CodingKeysTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case productName = "product_name"
                         case productCost = "product_cost"
                         case description = "description"
@@ -240,7 +240,7 @@ final class CodingKeysTests: XCTestCase {
                         try container.encode(self.description, forKey: CodingKeys.description)
                     }
 
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case productName = "product_name"
                         case productCost = "product_cost"
                         case description = "description"
@@ -339,7 +339,7 @@ final class CodingKeysTests: XCTestCase {
                 }
 
                 extension SomeEnum {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case variableBool = "variable-bool"
                         case bool = "bool"
                         case valInt = "val_int"
@@ -398,7 +398,7 @@ final class CodingKeysTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case productName = "product_Name"
                         case productCost = "product_Cost"
                         case description = "description"
@@ -446,7 +446,7 @@ final class CodingKeysTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case productName = "PRODUCT_NAME"
                         case productCost = "PRODUCT_COST"
                         case description = "DESCRIPTION"
@@ -494,7 +494,7 @@ final class CodingKeysTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case productName = "product-name"
                         case productCost = "product-cost"
                         case description = "description"
@@ -542,7 +542,7 @@ final class CodingKeysTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case productName = "PRODUCT-NAME"
                         case productCost = "PRODUCT-COST"
                         case description = "DESCRIPTION"
@@ -590,7 +590,7 @@ final class CodingKeysTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case productName = "Product-Name"
                         case productCost = "Product-Cost"
                         case description = "Description"
@@ -638,7 +638,7 @@ final class CodingKeysTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case product_name = "productName"
                         case product_cost = "productCost"
                         case description = "description"
@@ -732,7 +732,7 @@ final class CodingKeysTests: XCTestCase {
                 }
 
                 extension SomeEnum {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case variable = "variable"
                         case bool = "bool"
                         case val = "Val"

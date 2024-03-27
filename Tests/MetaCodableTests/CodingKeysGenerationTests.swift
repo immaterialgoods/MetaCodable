@@ -34,7 +34,7 @@ final class CodingKeysGenerationTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case `internal` = "internal"
                     }
                 }
@@ -81,7 +81,7 @@ final class CodingKeysGenerationTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case val1 = "val1"
                         case `associatedtype` = "associatedtype"
                         case val2 = "val2"
@@ -124,7 +124,7 @@ final class CodingKeysGenerationTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case val = "nested"
                         case key1val = "1val"
                     }
@@ -175,7 +175,7 @@ final class CodingKeysGenerationTests: XCTestCase {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case val1 = "val1"
                         case nested = "nested"
                         case val2 = "val2"
