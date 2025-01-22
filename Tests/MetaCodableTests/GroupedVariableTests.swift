@@ -53,7 +53,7 @@ struct GroupedVariableTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                             case three = "three"
@@ -110,7 +110,7 @@ struct GroupedVariableTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                             case three = "three"
@@ -169,7 +169,7 @@ struct GroupedVariableTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                             case three = "three"
@@ -207,7 +207,7 @@ struct GroupedVariableTests {
     //                     try container.encode(self.one, forKey: CodingKeys.one)
     //                     try container.encode(self.two, forKey: CodingKeys.two)
     //                 }
-    //                 enum CodingKeys: String, CodingKey {
+    //                 enum CodingKeys: String, CodingKey, CaseIterable {
     //                     case one = "one"
     //                     case two = "two"
     //                 }
@@ -264,7 +264,7 @@ struct GroupedVariableTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                             case three = "three"
@@ -321,7 +321,7 @@ struct GroupedVariableTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                             case three = "three"

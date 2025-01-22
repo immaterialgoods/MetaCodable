@@ -265,7 +265,7 @@ struct CodedAsEnumTests {
                     }
 
                     extension Command {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case type = "type"
                             case key = "key"
                             case value = "value"
@@ -385,7 +385,7 @@ struct CodedAsEnumTests {
                     }
 
                     extension SomeEnum {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case variable = "variable"
                             case bool = "bool"
                             case val = "val"
@@ -395,7 +395,7 @@ struct CodedAsEnumTests {
                             case string = "string"
                             case multi = "multi"
                         }
-                        enum DecodingKeys: String, CodingKey {
+                        enum DecodingKeys: String, CodingKey, CaseIterable {
                             case bool = "bool"
                             case int = "altInt"
                             case double = "altDouble1"
@@ -521,7 +521,7 @@ struct CodedAsEnumTests {
                     }
 
                     extension SomeEnum {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case type = "type"
                             case variable = "variable"
                             case val = "val"

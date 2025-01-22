@@ -198,7 +198,7 @@ struct CodedAsTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case key = "key"
                             case value = "value"
                             case key1 = "key1"
@@ -284,7 +284,7 @@ struct CodedAsTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case key = "key"
                             case value = "value"
                             case key1 = "key1"
@@ -379,7 +379,7 @@ struct CodedAsTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case key = "key"
                             case value = "value"
                             case key1 = "key1"
@@ -482,7 +482,7 @@ struct CodedAsTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case key = "key"
                             case value = "value"
                             case key1 = "key1"
@@ -543,7 +543,7 @@ struct CodedAsTests {
                     }
 
                     extension TestCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case fooBar = "fooBar"
                             case __macro_local_6fooBarfMu0_ = "foo_bar"
                         }
@@ -601,7 +601,7 @@ struct CodedAsTests {
                     }
 
                     extension TestCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case fooBar = "fooBar"
                             case __macro_local_6fooBarfMu0_ = "foo_bar"
                         }

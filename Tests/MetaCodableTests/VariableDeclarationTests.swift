@@ -44,7 +44,7 @@ struct VariableDeclarationTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                         }
                     }
@@ -98,7 +98,7 @@ struct VariableDeclarationTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                         }
                     }
@@ -317,7 +317,7 @@ struct VariableDeclarationTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value1 = "value1"
                             case value2 = "value2"
                         }
@@ -407,7 +407,7 @@ struct VariableDeclarationTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value1 = "value1"
                             case value2 = "value2"
                         }
@@ -517,7 +517,7 @@ struct VariableDeclarationTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                         }
                     }
@@ -557,7 +557,7 @@ struct VariableDeclarationTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                         }
                     }
@@ -608,7 +608,7 @@ struct VariableDeclarationTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                         }
                     }

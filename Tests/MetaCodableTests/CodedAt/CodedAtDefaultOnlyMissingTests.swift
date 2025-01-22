@@ -192,7 +192,7 @@ struct CodedAtDefaultOnlyMissingTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "key"
                         }
                     }
@@ -247,7 +247,7 @@ struct CodedAtDefaultOnlyMissingTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "key"
                         }
                     }
@@ -301,7 +301,7 @@ struct CodedAtDefaultOnlyMissingTests {
                         }
 
                         extension SomeCodable {
-                            enum CodingKeys: String, CodingKey {
+                            enum CodingKeys: String, CodingKey, CaseIterable {
                                 case value = "key"
                             }
                         }
@@ -369,7 +369,7 @@ struct CodedAtDefaultOnlyMissingTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "key"
                             case deeply = "deeply"
                             case nested = "nested"
@@ -438,7 +438,7 @@ struct CodedAtDefaultOnlyMissingTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "key"
                             case deeply = "deeply"
                             case nested = "nested"
@@ -506,7 +506,7 @@ struct CodedAtDefaultOnlyMissingTests {
                         }
 
                         extension SomeCodable {
-                            enum CodingKeys: String, CodingKey {
+                            enum CodingKeys: String, CodingKey, CaseIterable {
                                 case value = "key"
                                 case deeply = "deeply"
                                 case nested = "nested"
@@ -606,7 +606,7 @@ struct CodedAtDefaultOnlyMissingTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value1 = "key1"
                             case deeply = "deeply"
                             case nested = "nested"
@@ -730,7 +730,7 @@ struct CodedAtDefaultOnlyMissingTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value1 = "key1"
                             case deeply = "deeply"
                             case nested = "nested"
@@ -840,7 +840,7 @@ struct CodedAtDefaultOnlyMissingTests {
                             try deeply_container.encode(self.value6, forKey: CodingKeys.value6)
                         }
 
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value1 = "key1"
                             case deeply = "deeply"
                             case nested = "nested"

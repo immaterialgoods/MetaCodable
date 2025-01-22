@@ -37,7 +37,7 @@ struct UntaggedEnumTests {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case val = "val"
                     }
                 }
@@ -658,7 +658,7 @@ struct UntaggedEnumTests {
                     }
 
                     extension SomeEnum {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case variable = "variable"
                             case val = "val"
                             case str = "str"

@@ -35,7 +35,7 @@ struct CodableInheritanceTests {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case value = "value"
                     }
                 }
@@ -92,7 +92,7 @@ struct CodableInheritanceTests {
                             try container.encode(self.value, forKey: CodingKeys.value)
                         }
 
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                         }
                     }
@@ -150,7 +150,7 @@ struct CodableInheritanceTests {
                             try super.encode(to: encoder)
                         }
 
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                         }
                     }
@@ -201,7 +201,7 @@ struct CodableInheritanceTests {
                             try container.encode(self.value, forKey: CodingKeys.value)
                         }
 
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                         }
                     }

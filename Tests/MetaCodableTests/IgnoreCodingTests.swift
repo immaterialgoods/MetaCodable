@@ -59,7 +59,7 @@ struct IgnoreCodingTests {
                 }
 
                 extension SomeCodable {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case two = "two"
                         case three = "three"
                     }
@@ -234,7 +234,7 @@ struct IgnoreCodingTests {
                         }
 
                         extension SomeCodable {
-                            enum CodingKeys: String, CodingKey {
+                            enum CodingKeys: String, CodingKey, CaseIterable {
                                 case four = "four"
                             }
                         }
@@ -342,7 +342,7 @@ struct IgnoreCodingTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                         }
                     }
@@ -397,7 +397,7 @@ struct IgnoreCodingTests {
                     }
 
                     extension SomeEnum {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case variableBool = "variableBool"
                             case bool = "bool"
                         }
@@ -449,7 +449,7 @@ struct IgnoreCodingTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                         }
@@ -507,7 +507,7 @@ struct IgnoreCodingTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                         }
@@ -595,10 +595,10 @@ struct IgnoreCodingTests {
                     }
 
                     extension SomeEnum {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case variableBool = "variableBool"
                         }
-                        enum DecodingKeys: String, CodingKey {
+                        enum DecodingKeys: String, CodingKey, CaseIterable {
                             case bool = "bool"
                         }
                     }
@@ -705,14 +705,14 @@ struct IgnoreCodingTests {
                     }
 
                     extension SomeEnum {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case variableBool = "variableBool"
                             case bool = "bool"
                             case variable = "variable"
                             case val = "val"
                             case multi = "multi"
                         }
-                        enum DecodingKeys: String, CodingKey {
+                        enum DecodingKeys: String, CodingKey, CaseIterable {
                             case bool = "bool"
                             case multi = "multi"
                         }
@@ -806,13 +806,13 @@ struct IgnoreCodingTests {
                     }
 
                     extension SomeEnum {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case variableBool = "variableBool"
                             case variable = "variable"
                             case val = "val"
                             case multi = "multi"
                         }
-                        enum DecodingKeys: String, CodingKey {
+                        enum DecodingKeys: String, CodingKey, CaseIterable {
                             case bool = "bool"
                             case multi = "multi"
                         }
@@ -889,7 +889,7 @@ struct IgnoreCodingTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case deeply = "deeply"
                             case nested = "nested"
@@ -963,7 +963,7 @@ struct IgnoreCodingTests {
                             try nested_deeply_container.encodeIfPresent(self.two, forKey: CodingKeys.two)
                         }
 
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case deeply = "deeply"
                             case nested = "nested"
@@ -1068,12 +1068,12 @@ struct IgnoreCodingTests {
                     }
 
                     extension SomeEnum {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case val = "val"
                             case int = "altInt"
                             case variable = "variable"
                         }
-                        enum DecodingKeys: String, CodingKey {
+                        enum DecodingKeys: String, CodingKey, CaseIterable {
                             case string = "altString"
                             case multi = "multi"
                         }

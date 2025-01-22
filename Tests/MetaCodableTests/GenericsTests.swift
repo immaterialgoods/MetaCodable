@@ -41,7 +41,7 @@ struct GenericsTests {
                     }
 
                     extension GenericCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                         }
                     }
@@ -96,7 +96,7 @@ struct GenericsTests {
                     }
 
                     extension GenericCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value1 = "value1"
                             case value2 = "value2"
                             case value3 = "value3"
@@ -180,12 +180,12 @@ struct GenericsTests {
                     }
 
                     extension GenericCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                             case three = "three"
                         }
-                        enum DecodingKeys: String, CodingKey {
+                        enum DecodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                             case three = "three"
@@ -237,7 +237,7 @@ struct GenericsTests {
                     }
 
                     extension GenericCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                             case str = "str"
                         }
@@ -282,7 +282,7 @@ struct GenericsTests {
                             try container.encode(self.str, forKey: CodingKeys.str)
                         }
 
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                             case str = "str"
                         }
@@ -362,10 +362,10 @@ struct GenericsTests {
                     }
 
                     extension GenericCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case two = "two"
                         }
-                        enum DecodingKeys: String, CodingKey {
+                        enum DecodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                         }
@@ -414,7 +414,7 @@ struct GenericsTests {
                     }
 
                     extension GenericCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case str = "str"
                         }
                     }
@@ -466,7 +466,7 @@ struct GenericsTests {
                     }
 
                     extension GenericCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                             case str = "str"
                         }
@@ -518,7 +518,7 @@ struct GenericsTests {
                     }
 
                     extension GenericCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                             case str = "str"
                         }
@@ -564,7 +564,7 @@ struct GenericsTests {
                             try container.encode(self.str, forKey: CodingKeys.str)
                         }
 
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case value = "value"
                             case str = "str"
                         }
@@ -644,10 +644,10 @@ struct GenericsTests {
                     }
 
                     extension GenericCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case two = "two"
                         }
-                        enum DecodingKeys: String, CodingKey {
+                        enum DecodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                         }

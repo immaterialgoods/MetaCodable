@@ -41,7 +41,7 @@ struct CodingKeysGenerationTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case `internal` = "internal"
                         }
                     }
@@ -99,7 +99,7 @@ struct CodingKeysGenerationTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case val1 = "val1"
                             case `associatedtype` = "associatedtype"
                             case val2 = "val2"
@@ -151,7 +151,7 @@ struct CodingKeysGenerationTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case val = "nested"
                             case key1val = "1val"
                         }
@@ -215,7 +215,7 @@ struct CodingKeysGenerationTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case val1 = "val1"
                             case nested = "nested"
                             case val2 = "val2"

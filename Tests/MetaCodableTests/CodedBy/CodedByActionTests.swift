@@ -126,7 +126,7 @@ struct CodedByActionTests {
                     }
 
                     extension Dog.Info {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case tag = "tag"
                         }
                     }
@@ -158,7 +158,7 @@ struct CodedByActionTests {
                     }
 
                     extension Dog {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case name = "name"
                             case version = "version"
                             case info = "info"
@@ -289,7 +289,7 @@ struct CodedByActionTests {
                     }
 
                     extension Dog.Info {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case tag = "tag"
                         }
                     }
@@ -321,7 +321,7 @@ struct CodedByActionTests {
                     }
 
                     extension Dog {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case name = "name"
                             case info = "info"
                             case version = "version"
@@ -476,7 +476,7 @@ struct CodedByActionTests {
                     }
 
                     extension Item.Image {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case width = "width"
                             case height = "height"
                         }
@@ -513,7 +513,7 @@ struct CodedByActionTests {
                     }
 
                     extension Item {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case id = "id"
                             case title = "title"
                             case originalImage = "original"
@@ -657,7 +657,7 @@ struct CodedByActionTests {
                     }
 
                     extension Item.Image {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case width = "width"
                             case height = "height"
                         }
@@ -694,7 +694,7 @@ struct CodedByActionTests {
                     }
 
                     extension Item {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case title = "title"
                             case originalImage = "original"
                             case images = "images"
@@ -918,7 +918,7 @@ struct CodedByActionTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                             case two = "two"
                             case deeply = "deeply"
@@ -1078,7 +1078,7 @@ struct CodedByActionTests {
                     }
 
                     extension Item.Image {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case width = "width"
                             case height = "height"
                         }
@@ -1107,7 +1107,7 @@ struct CodedByActionTests {
                     }
 
                     extension Item {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case title = "title"
                             case images = "images"
                             case id = "id"
@@ -1249,7 +1249,7 @@ struct CodedByActionTests {
                     }
 
                     extension Item.Image {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case width = "width"
                             case height = "height"
                         }
@@ -1280,7 +1280,7 @@ struct CodedByActionTests {
                     }
 
                     extension Item {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case title = "title"
                             case images = "images"
                             case id = "id"

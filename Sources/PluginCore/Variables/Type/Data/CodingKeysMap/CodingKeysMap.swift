@@ -170,6 +170,7 @@ package final class CodingKeysMap {
         let clause = InheritanceClauseSyntax {
             InheritedTypeSyntax(type: "String" as TypeSyntax)
             InheritedTypeSyntax(type: "CodingKey" as TypeSyntax)
+            InheritedTypeSyntax(type: "CaseIterable" as TypeSyntax)
         }
         let decl = EnumDeclSyntax(name: typeName, inheritanceClause: clause) {
             for (key, `case`) in data where usedKeys.contains(key) {

@@ -201,7 +201,7 @@ struct IgnoreInitializedTests {
                     }
 
                     extension SomeEnum {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case bool = "bool"
                             case int = "altInt"
                             case string = "altString"
@@ -209,7 +209,7 @@ struct IgnoreInitializedTests {
                             case val = "val"
                             case multi = "multi"
                         }
-                        enum DecodingKeys: String, CodingKey {
+                        enum DecodingKeys: String, CodingKey, CaseIterable {
                             case bool = "bool"
                             case int = "altInt"
                             case string = "altString"
@@ -314,7 +314,7 @@ struct IgnoreInitializedTests {
                     }
 
                     extension SomeEnum {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case bool = "bool"
                             case int = "altInt"
                             case string = "altString"
@@ -322,7 +322,7 @@ struct IgnoreInitializedTests {
                             case val = "val"
                             case multi = "multi"
                         }
-                        enum DecodingKeys: String, CodingKey {
+                        enum DecodingKeys: String, CodingKey, CaseIterable {
                             case bool = "bool"
                             case int = "altInt"
                             case string = "altString"
@@ -374,7 +374,7 @@ struct IgnoreInitializedTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                         }
                     }
@@ -423,7 +423,7 @@ struct IgnoreInitializedTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                         }
                     }
@@ -472,7 +472,7 @@ struct IgnoreInitializedTests {
                     }
 
                     extension SomeCodable {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case one = "one"
                         }
                     }

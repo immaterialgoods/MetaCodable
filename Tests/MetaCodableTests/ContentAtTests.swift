@@ -123,7 +123,7 @@ struct ContentAtTests {
                     }
 
                     extension Command {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case type = "type"
                             case content = "content"
                             case key = "key"
@@ -218,7 +218,7 @@ struct ContentAtTests {
                     }
 
                     extension Command {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case type = "type"
                             case content = "content"
                             case key = "key"
@@ -315,7 +315,7 @@ struct ContentAtTests {
                     }
 
                     extension Command {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case type = "type"
                             case content = "content"
                             case key = "key"

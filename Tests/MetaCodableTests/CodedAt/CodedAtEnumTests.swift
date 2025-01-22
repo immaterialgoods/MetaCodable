@@ -130,7 +130,7 @@ struct CodedAtEnumTests {
                 }
 
                 extension SomeEnum {
-                    enum CodingKeys: String, CodingKey {
+                    enum CodingKeys: String, CodingKey, CaseIterable {
                         case type = "type1"
                         case variable = "variable"
                         case val = "val"
@@ -233,7 +233,7 @@ struct CodedAtEnumTests {
                     }
 
                     extension Command {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case type = "type"
                             case key = "key"
                             case value = "value"
@@ -323,7 +323,7 @@ struct CodedAtEnumTests {
                     }
 
                     extension Command {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case type = "type"
                             case key = "key"
                             case value = "value"
@@ -415,7 +415,7 @@ struct CodedAtEnumTests {
                     }
 
                     extension Command {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case type = "type"
                             case key = "key"
                             case value = "value"
@@ -526,7 +526,7 @@ struct CodedAtEnumTests {
                     }
 
                     extension Operation.Registration {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case mac = "mac"
                             case data = "data"
                             case attributes = "attributes"
@@ -556,7 +556,7 @@ struct CodedAtEnumTests {
                     }
 
                     extension Operation.Expiry {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case token = "token"
                             case data = "data"
                             case attributes = "attributes"
@@ -616,7 +616,7 @@ struct CodedAtEnumTests {
                     }
 
                     extension Operation {
-                        enum CodingKeys: String, CodingKey {
+                        enum CodingKeys: String, CodingKey, CaseIterable {
                             case type = "operation"
                             case data = "data"
                             case attributes = "attributes"
