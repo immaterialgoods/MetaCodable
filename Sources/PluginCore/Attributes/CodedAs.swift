@@ -14,7 +14,7 @@ package struct CodedAs: PropertyAttribute {
 
     /// The alternate value expression provided.
     var exprs: [ExprSyntax] {
-        return node.arguments?
+        node.arguments?
             .as(LabeledExprListSyntax.self)?.map(\.expression) ?? []
     }
 
@@ -23,8 +23,9 @@ package struct CodedAs: PropertyAttribute {
     /// Used for enums with internal/adjacent tagging to decode
     /// the identifier to this type.
     var type: TypeSyntax? {
-        return node.attributeName.as(IdentifierTypeSyntax.self)?
-            .genericArgumentClause?.arguments.first?.argument
+        node.attributeName.as(IdentifierTypeSyntax.self)?
+            .genericArgumentClause?.arguments
+            .first?.argument.as(TypeSyntax.self)
     }
 
     /// Creates a new instance with the provided node.
@@ -62,7 +63,7 @@ package struct CodedAs: PropertyAttribute {
     ///
     /// - Returns: The built diagnoser instance.
     func diagnoser() -> DiagnosticProducer {
-        return AggregatedDiagnosticProducer {
+        AggregatedDiagnosticProducer {
             cantDuplicate()
             `if`(
                 has(arguments: 0),
@@ -71,7 +72,9 @@ package struct CodedAs: PropertyAttribute {
                         syntaxes: EnumDeclSyntax.self, ProtocolDeclSyntax.self
                     )
                     mustBeCombined(with: Codable.self)
-                    mustBeCombined(with: CodedAt.self)
+                    mustBeCombined(
+                        with: CodedAt.self, or: DecodedAt.self, EncodedAt.self
+                    )
                 },
                 else: `if`(
                     isVariable,
@@ -127,7 +130,7 @@ extension Registration where Key == [ExprSyntax], Decl: AttributableDeclSyntax {
 }
 
 extension Registration
-where Key == [String], Decl: AttributableDeclSyntax, Var: PropertyVariable {
+where Decl: AttributableDeclSyntax, Var: PropertyVariable {
     /// Update registration with alternate `CodingKey`s data.
     ///
     /// New registration is updated with `CodingKey`s data that will be

@@ -1,3 +1,4 @@
+import Foundation
 import MetaCodable
 import SwiftDiagnostics
 import SwiftSyntax
@@ -75,6 +76,30 @@ struct CodableTests {
                     """
             )
         }
+
+        @Test
+        @available(*, deprecated, message: "Deprecated")
+        func availableAttributeEncoding() throws {
+            let original = SomeCodable(value: "deprecated_test")
+            let encoded = try JSONEncoder().encode(original)
+            let decoded = try JSONDecoder().decode(
+                SomeCodable.self, from: encoded)
+            #expect(decoded.value == "deprecated_test")
+        }
+
+        @Test
+        @available(*, deprecated, message: "Deprecated")
+        func availableAttributeFromJSON() throws {
+            let jsonStr = """
+                {
+                    "value": "available_value"
+                }
+                """
+            let jsonData = try #require(jsonStr.data(using: .utf8))
+            let decoded = try JSONDecoder().decode(
+                SomeCodable.self, from: jsonData)
+            #expect(decoded.value == "available_value")
+        }
     }
 
     struct WithoutAnyCustomization {
@@ -135,6 +160,41 @@ struct CodableTests {
                     """
             )
         }
+
+        @Test
+        func basicCodableEncoding() throws {
+            let original = SomeCodable(value: "basic_test")
+            let encoded = try JSONEncoder().encode(original)
+            let decoded = try JSONDecoder().decode(
+                SomeCodable.self, from: encoded)
+            #expect(decoded.value == "basic_test")
+        }
+
+        @Test
+        func basicCodableFromJSON() throws {
+            let jsonStr = """
+                {
+                    "value": "basic_value"
+                }
+                """
+            let jsonData = try #require(jsonStr.data(using: .utf8))
+            let decoded = try JSONDecoder().decode(
+                SomeCodable.self, from: jsonData)
+            #expect(decoded.value == "basic_value")
+        }
+
+        @Test
+        func staticPropertiesIgnored() throws {
+            let original = SomeCodable(value: "test")
+            let encoded = try JSONEncoder().encode(original)
+            let json =
+                try JSONSerialization.jsonObject(with: encoded)
+                as! [String: Any]
+            // Static properties should not be encoded
+            #expect(json["other"] == nil)
+            #expect(json["otherM"] == nil)
+            #expect(json["value"] as? String == "test")
+        }
     }
 
     struct WithOptionalTypeWithoutAnyCustomization {
@@ -142,7 +202,7 @@ struct CodableTests {
         struct SomeCodable {
             let value1: String?
             let value2: String!
-            let value3: Optional<String>
+            let value3: String?
         }
 
         @Test
@@ -501,13 +561,97 @@ struct CodableTests {
             )
         }
     }
+
+    struct EnumWithoutAssociatedVariables {
+        @Codable
+        enum Foo {
+            case foo
+        }
+
+        @Test
+        func expansion() throws {
+            assertMacroExpansion(
+                """
+                @Codable
+                enum Foo {
+                    case foo
+                }
+                """,
+                expandedSource:
+                    """
+                    enum Foo {
+                        case foo
+                    }
+                    
+                    extension Foo: Decodable {
+                        init(from decoder: any Decoder) throws {
+                            let container = try decoder.container(keyedBy: DecodingKeys.self)
+                            guard container.allKeys.count == 1 else {
+                                let context = DecodingError.Context(
+                                    codingPath: container.codingPath,
+                                    debugDescription: "Invalid number of keys found, expected one."
+                                )
+                                throw DecodingError.typeMismatch(Self.self, context)
+                            }
+                            let contentDecoder = try container.superDecoder(forKey: container.allKeys.first.unsafelyUnwrapped)
+                            switch container.allKeys.first.unsafelyUnwrapped {
+                            case DecodingKeys.foo:
+                                self = .foo
+                            }
+                        }
+                    }
+                    
+                    extension Foo: Encodable {
+                        func encode(to encoder: any Encoder) throws {
+                            var container = encoder.container(keyedBy: CodingKeys.self)
+                            switch self {
+                            case .foo:
+                                let _ = container.superEncoder(forKey: CodingKeys.foo)
+                            }
+                        }
+                    }
+                    
+                    extension Foo {
+                        enum CodingKeys: String, CodingKey {
+                            case foo = "foo"
+                        }
+                        enum DecodingKeys: String, CodingKey {
+                            case foo = "foo"
+                        }
+                    }
+                    """
+            )
+        }
+
+        @Test
+        func decodingFromJSON() throws {
+            let jsonStr = """
+                {
+                    "foo": {}
+                }
+                """
+            let jsonData = try #require(jsonStr.data(using: .utf8))
+            let decoded = try JSONDecoder().decode(Foo.self, from: jsonData)
+            #expect(decoded == Foo.foo)
+        }
+
+        @Test
+        func encodingToJSON() throws {
+            let original = Foo.foo
+            let encoded = try JSONEncoder().encode(original)
+            let json = try JSONSerialization.jsonObject(with: encoded) as? [String: Any]
+            #expect((json?["foo"] as? [String: Any])?.isEmpty == true)
+        }
+    }
 }
 
 #if canImport(MacroPlugin)
 @testable import MacroPlugin
 
-let allMacros: [String: Macro.Type] = [
+let allMacros: [String: (Macro & Sendable).Type] = [
     "CodedAt": MacroPlugin.CodedAt.self,
+    "DecodedAt": MacroPlugin.DecodedAt.self,
+    "EncodedAt": MacroPlugin.EncodedAt.self,
     "CodedIn": MacroPlugin.CodedIn.self,
     "Default": MacroPlugin.Default.self,
     "CodedBy": MacroPlugin.CodedBy.self,
@@ -517,6 +661,8 @@ let allMacros: [String: Macro.Type] = [
     "IgnoreDecoding": MacroPlugin.IgnoreDecoding.self,
     "IgnoreEncoding": MacroPlugin.IgnoreEncoding.self,
     "Codable": MacroPlugin.Codable.self,
+    "ConformDecodable": MacroPlugin.ConformDecodable.self,
+    "ConformEncodable": MacroPlugin.ConformEncodable.self,
     "MemberInit": MacroPlugin.MemberInit.self,
     "CodingKeys": MacroPlugin.CodingKeys.self,
     "IgnoreCodingInitialized": MacroPlugin.IgnoreCodingInitialized.self,
@@ -524,8 +670,10 @@ let allMacros: [String: Macro.Type] = [
     "UnTagged": MacroPlugin.UnTagged.self,
 ]
 #else
-let allMacros: [String: Macro.Type] = [
+let allMacros: [String: (Macro & Sendable).Type] = [
     "CodedAt": CodedAt.self,
+    "DecodedAt": DecodedAt.self,
+    "EncodedAt": EncodedAt.self,
     "CodedIn": CodedIn.self,
     "Default": Default.self,
     "CodedBy": CodedBy.self,
@@ -535,6 +683,8 @@ let allMacros: [String: Macro.Type] = [
     "IgnoreDecoding": IgnoreDecoding.self,
     "IgnoreEncoding": IgnoreEncoding.self,
     "Codable": Codable.self,
+    "ConformDecodable": ConformDecodable.self,
+    "ConformEncodable": ConformEncodable.self,
     "MemberInit": MemberInit.self,
     "CodingKeys": CodingKeys.self,
     "IgnoreCodingInitialized": IgnoreCodingInitialized.self,
@@ -559,7 +709,7 @@ func assertMacroExpansion(
         originalSource, expandedSource: expandedSource,
         diagnostics: diagnostics,
         macroSpecs: allMacros.mapValues { value in
-            return MacroSpec(type: value, conformances: conformances)
+            MacroSpec(type: value, conformances: conformances)
         },
         testModuleName: testModuleName, testFileName: testFileName,
         indentationWidth: indentationWidth
@@ -602,7 +752,7 @@ extension String {
 
 extension Attribute {
     static var misuseID: MessageID {
-        return Self.init(
+        Self.init(
             from: .init(
                 attributeName: IdentifierTypeSyntax(
                     name: .identifier(Self.name)
@@ -614,7 +764,7 @@ extension Attribute {
 
 extension DiagnosticSpec {
     static func multiBinding(line: Int, column: Int) -> Self {
-        return .init(
+        .init(
             id: MessageID(
                 domain: "SwiftSyntaxMacroExpansion",
                 id: "peerMacroOnVariableWithMultipleBindings"
@@ -626,13 +776,20 @@ extension DiagnosticSpec {
 }
 
 extension Tag {
-    @Tag static var `struct`: Self
-    @Tag static var `class`: Self
-    @Tag static var `enum`: Self
-    @Tag static var actor: Self
-    @Tag static var external: Self
-    @Tag static var `internal`: Self
-    @Tag static var adjacent: Self
+    @Tag
+    static var `struct`: Self
+    @Tag
+    static var `class`: Self
+    @Tag
+    static var `enum`: Self
+    @Tag
+    static var actor: Self
+    @Tag
+    static var external: Self
+    @Tag
+    static var `internal`: Self
+    @Tag
+    static var adjacent: Self
 }
 
 #if swift(<6)

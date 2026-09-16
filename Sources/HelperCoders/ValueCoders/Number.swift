@@ -3,7 +3,7 @@
 protocol NumberCodingStrategy: ValueCodingStrategy where Value == Self {}
 
 public extension ValueCodingStrategy
-where Value: Decodable & ExpressibleByIntegerLiteral & LosslessStringConvertible
+where Value: Decodable & ExpressibleByIntegerLiteral & LosslessStringConvertible & Sendable
 {
     /// Decodes numeric data from the given `decoder`.
     ///
@@ -73,7 +73,7 @@ internal extension Double {
     static func numberValue<Number>(
         from decoder: Decoder
     ) -> Number? where Number: ExpressibleByIntegerLiteral {
-        return Number(exact: try? Self(from: decoder))
+        Number(exact: try? Self(from: decoder))
     }
 }
 

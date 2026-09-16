@@ -8,18 +8,16 @@ import SwiftSyntaxMacros
 /// The generated switch expression compares case value with the decoded
 /// identifier.
 struct InternallyTaggedEnumSwitcher<Variable>: TaggedEnumSwitcherVariable
-where Variable: PropertyVariable {
+where
+    Variable: PropertyVariable,
+    Variable.Initialization == RequiredInitialization
+{
     /// The identifier variable build action type.
     ///
     /// Used to build the identifier data and pass in encoding callback.
     typealias VariableBuilder = (
         PathRegistration<EnumDeclSyntax, BasicPropertyVariable>
     ) -> PathRegistration<EnumDeclSyntax, Variable>
-    /// The container for case variation encoding.
-    ///
-    /// This is used in the generated code as the container
-    /// for case variation data from the callback to be encoded.
-    let encodeContainer: TokenSyntax
     /// The identifier name to use.
     ///
     /// This is used as identifier variable name in generated code.
@@ -27,82 +25,117 @@ where Variable: PropertyVariable {
     /// The identifier type to use.
     ///
     /// This is used as identifier variable type in generated code.
-    let identifierType: TypeSyntax
+    let identifierType: TypeSyntax?
     /// The declaration for which code generated.
     ///
     /// This declaration is used for additional attributes data
     /// for customizing generated code.
     let decl: EnumDeclSyntax
-    /// The key path at which identifier variable is registered.
-    ///
-    /// Identifier variable is registered with this path at `node`
-    /// during initialization. This path is used for encode callback
-    /// provided to enum-cases.
-    let keys: [CodingKeysMap.Key]
-    /// The node at which identifier variable is registered.
+    /// The node at which identifier variable is registered for decoding.
     ///
     /// Identifier variable is registered with the path at this node
     /// during initialization. This node is used to generate identifier
-    /// variable decoding/encoding implementations.
-    var node: PropertyVariableTreeNode
+    /// variable decoding implementations.
+    var decodingNode: PropertyVariableTreeNode
+    /// The node at which identifier variable is registered for encoding.
+    ///
+    /// Identifier variable is registered with the path at this node
+    /// during initialization. This node is used to generate identifier
+    /// variable encoding implementations.
+    var encodingNode: PropertyVariableTreeNode
+    /// The coding keys map for managing key path resolution and generation.
+    ///
+    /// Maintains the mapping between field names and their corresponding coding keys,
+    /// enabling proper key path resolution during encoding and decoding operations.
+    /// Used to generate and track coding keys for the identifier variable registration.
+    var codingKeys: CodingKeysMap
+    /// The key path configuration for identifier variable registration.
+    ///
+    /// Defines the separate decoding and encoding paths where the identifier variable
+    /// should be registered. Both paths must be non-empty for internal tagging to work.
+    /// The paths determine the exact location in the coding structure where the
+    /// identifier will be read from during decoding and written to during encoding.
+    let keyPath: PathKey
     /// The builder action for building identifier variable.
     ///
     /// This builder action is used to create and use identifier variable
     /// data to be passed to enum-cases encoding callback.
     let variableBuilder: VariableBuilder
+    /// The container variable that manages encoding/decoding container exposure.
+    ///
+    /// Wraps the identifier variable with container management functionality,
+    /// exposing both decoding and encoding containers through named variables.
+    /// This variable handles the container assignment and provides the interface
+    /// for accessing containers during the coding process.
+    let variable: ContainerVariable<Variable>
+    /// Whether to force explicit `return` statements in generated decoding switch cases.
+    ///
+    /// When `true`, each enum case in the generated decoding switch statement will include
+    /// an explicit `return` statement after the case assignment (`self = .case(...)`).
+    /// This provides early exit from the switch and can help with code clarity and
+    /// potential compiler optimizations.
+    ///
+    /// When `false`, the switch cases rely on implicit fallthrough behavior without
+    /// explicit return statements, which is the traditional approach.
+    ///
+    /// This flag is typically set based on the code generation strategy or specific
+    /// requirements for the generated decoding implementation.
+    let forceDecodingReturn: Bool
+    /// Whether this enum should be treated as RawRepresentable.
+    ///
+    /// When `true`, indicates that the enum has no associated values and should
+    /// be encoded/decoded using RawRepresentable semantics. This affects how
+    /// the enum cases are processed during code generation.
+    let rawRepresentable: Bool
 
-    /// Creates switcher variable with provided data.
+    /// Creates an internally tagged enum switcher and configures all components.
+    ///
+    /// This is the primary initializer that sets up the complete internally tagged enum
+    /// switcher from scratch. It creates the decoding/encoding nodes, registers the
+    /// identifier variable at the specified key paths, and configures the container
+    /// variable with the provided container names.
     ///
     /// - Parameters:
-    ///   - encodeContainer: The container for case variation encoding.
-    ///   - identifier: The identifier name to use.
-    ///   - identifierType: The identifier type to use.
-    ///   - node: The node at which identifier variable is registered.
-    ///   - keys: The key path at which identifier variable is registered.
-    ///   - decl: The declaration for which code generated.
-    ///   - variableBuilder: The builder action for building identifier.
+    ///   - coderPrefix: The prefix for coder variable names that will be used
+    ///     to generate decoder and encoder variable names.
+    ///   - topDecode: Whether the decoding is happening at the top level.
+    ///   - topEncode: Whether the encoding is happening at the top level.
+    ///   - identifier: The identifier token name for the enum case identifier variable.
+    ///   - identifierType: The optional type syntax for the identifier variable. If nil,
+    ///     default fallback handling with nil values will be applied.
+    ///   - keyPath: The key path configuration with non-empty decoding and encoding paths
+    ///     where the identifier variable will be registered.
+    ///   - codingKeys: The coding keys map for managing key generation and resolution.
+    ///   - decl: The enum declaration syntax for which code is being generated.
+    ///   - context: The macro expansion context for key generation and validation.
+    ///   - forceDecodingReturn: Whether to force explicit `return` statements in generated
+    ///     decoding switch cases. When `true`, each case includes a `return` after assignment
+    ///     for early exit from the switch statement.
+    ///   - rawRepresentable: Whether this enum should be treated as RawRepresentable.
+    ///     When `true`, indicates the enum has no associated values and should use
+    ///     RawRepresentable semantics for encoding/decoding.
+    ///   - variableBuilder: The builder function for transforming the basic property
+    ///     variable into the final variable type with custom processing.
     init(
-        encodeContainer: TokenSyntax,
-        identifier: TokenSyntax, identifierType: TypeSyntax,
-        node: PropertyVariableTreeNode, keys: [CodingKeysMap.Key],
-        decl: EnumDeclSyntax, variableBuilder: @escaping VariableBuilder
-    ) {
-        self.encodeContainer = encodeContainer
-        self.identifier = identifier
-        self.identifierType = identifierType
-        self.decl = decl
-        self.node = node
-        self.keys = keys
-        self.variableBuilder = variableBuilder
-    }
-
-    /// Creates switcher variable with provided data.
-    ///
-    /// - Parameters:
-    ///   - encodeContainer: The container for case variation encoding.
-    ///   - identifier: The identifier name to use.
-    ///   - identifierType: The identifier type to use.
-    ///   - keyPath: The key path at which identifier variable is registered.
-    ///   - codingKeys: The map where `CodingKeys` maintained.
-    ///   - decl: The declaration for which code generated.
-    ///   - context: The context in which to perform the macro expansion.
-    ///   - variableBuilder: The builder action for building identifier.
-    init(
-        encodeContainer: TokenSyntax,
-        identifier: TokenSyntax, identifierType: TypeSyntax,
-        keyPath: [String], codingKeys: CodingKeysMap,
+        coderPrefix: TokenSyntax, topDecode: Bool, topEncode: Bool,
+        identifier: TokenSyntax, identifierType: TypeSyntax?,
+        keyPath: PathKey, codingKeys: CodingKeysMap,
         decl: EnumDeclSyntax, context: some MacroExpansionContext,
+        forceDecodingReturn: Bool, rawRepresentable: Bool,
         variableBuilder: @escaping VariableBuilder
     ) {
-        precondition(!keyPath.isEmpty)
-        self.encodeContainer = encodeContainer
         self.identifier = identifier
         self.identifierType = identifierType
         self.decl = decl
         self.variableBuilder = variableBuilder
-        var node = PropertyVariableTreeNode()
+        self.forceDecodingReturn = forceDecodingReturn
+        self.rawRepresentable = rawRepresentable
+
+        var decodingNode = PropertyVariableTreeNode()
+        var encodingNode = PropertyVariableTreeNode()
+
         let variable = BasicPropertyVariable(
-            name: identifier, type: self.identifierType, value: nil,
+            name: identifier, type: "_", value: nil,
             decodePrefix: "", encodePrefix: "",
             decode: true, encode: true
         )
@@ -110,30 +143,37 @@ where Variable: PropertyVariable {
         let output = variableBuilder(input)
         let key = output.key
         let field = self.identifier
-        self.keys = codingKeys.add(keys: key, field: field, context: context)
-        let containerVariable = ContainerVariable(
-            encodeContainer: encodeContainer, base: output.variable
+
+        // Get separate keys for decoding and encoding
+        let decodingKeys = codingKeys.add(
+            keys: key.decoding, field: field, context: context
         )
-        node.register(
-            variable: containerVariable, keyPath: keys,
+        let encodingKeys = codingKeys.add(
+            keys: key.encoding, field: field, context: context
+        )
+
+        self.variable = ContainerVariable(
+            coderPrefix: coderPrefix, topDecode: topDecode,
+            topEncode: topEncode,
+            base: output.variable, providedType: identifierType
+        )
+
+        // Register for decoding using decodingKeys
+        decodingNode.register(
+            variable: self.variable, keyPath: decodingKeys,
             immutableEncodeContainer: true
         )
-        self.node = node
-    }
 
-    /// Create basic identifier variable.
-    ///
-    /// Builds a basic identifier variable that can be processed by builder
-    /// action to be passed to enum-case encoding callback.
-    ///
-    /// - Parameter name: The variable name to use.
-    /// - Returns: The basic identifier variable.
-    func base(_ name: TokenSyntax) -> BasicPropertyVariable {
-        return BasicPropertyVariable(
-            name: name, type: self.identifierType, value: nil,
-            decodePrefix: "", encodePrefix: "",
-            decode: true, encode: true
+        // Register for encoding using encodingKeys
+        encodingNode.register(
+            variable: self.variable, keyPath: encodingKeys,
+            immutableEncodeContainer: true
         )
+
+        self.decodingNode = decodingNode
+        self.encodingNode = encodingNode
+        self.codingKeys = codingKeys
+        self.keyPath = keyPath
     }
 
     /// Provides node at which case associated variables are registered.
@@ -150,7 +190,7 @@ where Variable: PropertyVariable {
         for decl: EnumCaseVariableDeclSyntax,
         in context: some MacroExpansionContext
     ) -> PropertyVariableTreeNode {
-        return .init()
+        .init()
     }
 
     /// Creates value expressions for provided enum-case variable.
@@ -170,7 +210,15 @@ where Variable: PropertyVariable {
         codingKeys: CodingKeysMap, context: some MacroExpansionContext
     ) -> EnumVariable.CaseValue where Var: EnumCaseVariable {
         let name = CodingKeysMap.Key.name(for: variable.name).text
-        return .raw(!values.isEmpty ? values : ["\(literal: name)"])
+        return !values.isEmpty
+            ? .raw(
+                values.map { expr in
+                    .from(
+                        expression: expr, inheritedType: identifierType,
+                        context: context
+                    )
+                })
+            : .raw([.init(syntax: "\(literal: name)", type: .string)])
     }
 
     /// Provides the syntax for decoding at the provided location.
@@ -219,33 +267,72 @@ where Variable: PropertyVariable {
     func codingKeys(
         in context: some MacroExpansionContext
     ) -> MemberBlockItemListSyntax {
-        return []
+        []
     }
 }
 
 extension InternallyTaggedEnumSwitcher {
-    /// A variable value exposing encoding container.
+    /// A variable value exposing decoder and encoder.
     ///
     /// The `ContainerVariable` forwards decoding implementation
-    /// to underlying variable while exposing encoding container via variable
-    /// provided with `encodeContainer` name.
+    /// to underlying variable while exposing decoder and encoder via computed
+    /// properties based on coderPrefix and topLevel flag.
     struct ContainerVariable<Wrapped>: PropertyVariable, ComposedVariable
     where Wrapped: PropertyVariable {
         /// The initialization type of this variable.
         ///
         /// Initialization type is the same as underlying wrapped variable.
         typealias Initialization = Wrapped.Initialization
-        /// The container for case variation encoding.
+        /// The prefix for coder variable names.
         ///
-        /// This is used in the generated code as the container
-        /// for case variation data from the callback to be encoded.
-        let encodeContainer: TokenSyntax
+        /// This prefix is used to generate decoder and encoder variable names.
+        let coderPrefix: TokenSyntax
+        /// Whether the decoding is happening at the top level.
+        ///
+        /// When `true`, indicates that the decoding is happening at the top level
+        /// (directly with decoder). When `false`, indicates that decoding
+        /// is happening within a container.
+        let topDecode: Bool
+        /// Whether the encoding is happening at the top level.
+        ///
+        /// When `true`, indicates that the encoding is happening at the top level
+        /// (directly with encoder). When `false`, indicates that encoding
+        /// is happening within a container.
+        let topEncode: Bool
         /// The value wrapped by this instance.
         ///
         /// The wrapped variable's type data is
         /// preserved and this variable is used
         /// to chain code generation implementations.
         let base: Wrapped
+        /// The optional type syntax provided for the container.
+        ///
+        /// When specified, this type determines the container's optionality behavior
+        /// during decoding. If the type is optional, missing containers are handled
+        /// gracefully. If non-optional or nil, different fallback strategies apply.
+        let providedType: TypeSyntax?
+
+        /// The computed decoder variable name.
+        ///
+        /// Generates the decoder variable name based on the coderPrefix and topDecode flag.
+        /// When topDecode is true, appends "Decoder". When false, appends "Container".
+        var decoder: TokenSyntax {
+            guard topDecode else {
+                return "\(coderPrefix)Container"
+            }
+            return "\(coderPrefix)Decoder"
+        }
+
+        /// The computed encoder variable name.
+        ///
+        /// Generates the encoder variable name based on the coderPrefix and topEncode flag.
+        /// When topEncode is true, appends "Encoder". When false, appends "Container".
+        var encoder: TokenSyntax {
+            guard topEncode else {
+                return "\(coderPrefix)Container"
+            }
+            return "\(coderPrefix)Encoder"
+        }
 
         /// Whether the variable is to be decoded.
         ///
@@ -265,11 +352,60 @@ extension InternallyTaggedEnumSwitcher {
         /// This variable never requires `Encodable` conformance
         var requireEncodable: Bool? { false }
 
+        /// The fallback strategy used when decoding fails or data is missing.
+        ///
+        /// Determines how to handle decoding failures based on the provided type:
+        /// - When `providedType` is `nil`: Uses `.ifMissing` fallback for both missing
+        ///   and error cases, setting the decoder to `nil`.
+        /// - When `providedType` is optional: Uses `.onlyIfMissing` fallback, setting
+        ///   the decoder to `nil` only when data is missing.
+        /// - When `providedType` is non-optional: Uses `.throw` strategy, propagating
+        ///   decoding errors without fallback handling.
+        var decodingFallback: DecodingFallback {
+            let decoderFallbackSyntax = CodeBlockItemListSyntax {
+                "\(decoder) = nil"
+            }
+
+            return switch providedType {
+            case .none:
+                .ifMissing(
+                    decoderFallbackSyntax, ifError: decoderFallbackSyntax
+                )
+            case .some(let type) where type.isOptionalTypeSyntax == true:
+                .onlyIfMissing(decoderFallbackSyntax)
+            default:
+                .throw
+            }
+        }
+
+        /// Provides the code syntax for decoding this variable
+        /// at the provided location.
+        ///
+        /// Assigns the decoder passed in location to the variable
+        /// created with the computed `decoder` name.
+        ///
+        /// - Parameters:
+        ///   - context: The context in which to perform the macro expansion.
+        ///   - location: The decoding location for the variable.
+        ///
+        /// - Returns: The generated variable decoding code.
+        func decoding(
+            in context: some MacroExpansionContext,
+            from location: PropertyCodingLocation
+        ) -> CodeBlockItemListSyntax {
+            switch location {
+            case .coder(let decoder, _):
+                "\(self.decoder) = \(decoder)"
+            case .container(let container, _, _):
+                "\(self.decoder) = \(container)"
+            }
+        }
+
         /// Provides the code syntax for encoding this variable
         /// at the provided location.
         ///
-        /// Assigns the encoding container passed in location to the variable
-        /// created with the `encodeContainer` name provided.
+        /// Assigns the encoder passed in location to the variable
+        /// created with the computed `encoder` name.
         ///
         /// - Parameters:
         ///   - context: The context in which to perform the macro expansion.
@@ -280,11 +416,11 @@ extension InternallyTaggedEnumSwitcher {
             in context: some MacroExpansionContext,
             to location: PropertyCodingLocation
         ) -> CodeBlockItemListSyntax {
-            return switch location {
+            switch location {
             case .coder(let encoder, _):
-                fatalError("Error encoding \(Self.self) to \(encoder)")
+                "let \(self.encoder) = \(encoder)"
             case .container(let container, _, _):
-                "var \(self.encodeContainer) = \(container)"
+                "var \(self.encoder) = \(container)"
             }
         }
     }

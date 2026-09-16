@@ -36,14 +36,9 @@ jobs:
         {
           "include": [
             {
-              "os": "ubuntu-latest",
+              "os": "macos-15",
               "language": "swift",
-              "swift": "latest"
-            },
-            {
-              "os": "macos-latest",
-              "language": "swift",
-              "swift": "6.0.0"
+              "swift": "6.1.2"
             }
           ]
         }
@@ -53,9 +48,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
     - name: Spellcheck Action
-      uses: rojopolis/spellcheck-github-actions@0.44.0
+      uses: rojopolis/spellcheck-github-actions@0.60.0
       with:
         config_path: .github/config/spellcheck.yaml
 
@@ -69,18 +64,134 @@ jobs:
           "include": [
             {
               "os": "ubuntu-latest",
-              "swift": "latest"
+              "swift": "5.9",
+              "dependencies": {
+                "swift-syntax": "509.1.1"
+              }
             },
             {
-              "os": "macos-13",
-              "swift": "5.9"
+              "os": "ubuntu-latest",
+              "swift": "5.9",
+              "dependencies": {
+                "swift-syntax": "510.0.3"
+              }
             },
             {
-              "os": "macos-latest",
-              "swift": "6.0.0"
+              "os": "ubuntu-latest",
+              "swift": "5.9",
+              "dependencies": {
+                "swift-syntax": "600.0.1"
+              }
+            },
+            {
+              "os": "ubuntu-latest",
+              "swift": "5.9",
+              "dependencies": {
+                "swift-syntax": "601.0.1"
+              }
+            },
+            {
+              "os": "ubuntu-22.04",
+              "swift": "5.10",
+              "dependencies": {
+                "swift-syntax": "509.1.1"
+              }
+            },
+            {
+              "os": "ubuntu-22.04",
+              "swift": "5.10",
+              "dependencies": {
+                "swift-syntax": "510.0.3"
+              }
+            },
+            {
+              "os": "ubuntu-22.04",
+              "swift": "5.10",
+              "dependencies": {
+                "swift-syntax": "600.0.1"
+              }
+            },
+            {
+              "os": "ubuntu-22.04",
+              "swift": "5.10",
+              "dependencies": {
+                "swift-syntax": "601.0.1"
+              }
+            },
+            {
+              "os": "ubuntu-latest",
+              "swift": "6.0",
+              "dependencies": {
+                "swift-syntax": "509.1.1"
+              }
+            },
+            {
+              "os": "ubuntu-latest",
+              "swift": "6.0",
+              "dependencies": {
+                "swift-syntax": "510.0.3"
+              }
+            },
+            {
+              "os": "ubuntu-latest",
+              "swift": "6.0",
+              "dependencies": {
+                "swift-syntax": "600.0.1"
+              }
+            },
+            {
+              "os": "ubuntu-latest",
+              "swift": "6.0",
+              "dependencies": {
+                "swift-syntax": "601.0.1"
+              }
+            },
+            {
+              "os": "ubuntu-latest",
+              "swift": "6.1",
+              "dependencies": {
+                "swift-syntax": "509.1.1"
+              }
+            },
+            {
+              "os": "ubuntu-latest",
+              "swift": "6.1",
+              "dependencies": {
+                "swift-syntax": "510.0.3"
+              }
+            },
+            {
+              "os": "ubuntu-latest",
+              "swift": "6.1",
+              "dependencies": {
+                "swift-syntax": "600.0.1"
+              }
+            },
+            {
+              "os": "ubuntu-latest",
+              "swift": "6.1",
+              "dependencies": {
+                "swift-syntax": "601.0.1"
+              }
+            },
+            {
+              "os": "ubuntu-latest",
+              "swift": "6.2",
+              "dependencies": {
+                "swift-syntax": "602.0.0"
+              }
+            },
+            {
+              "os": "macos-15",
+              "swift": "6.1.2"
             }
           ]
         }
+      # disable until prebuilt macro issues are fixed
+      # {
+      #   "os": "ubuntu-latest",
+      #   "swift": "latest"
+      # },
 
   cocoapods-test:
     name: CocoaPods
@@ -90,7 +201,7 @@ jobs:
         platform: ['macOS', 'iOS']
     with:
       os: macos-latest
-      swift: 6.0.0
+      swift: latest
       platforms: ${{ matrix.platform }}
 
   ci:
@@ -111,7 +222,7 @@ jobs:
     needs: [analyze, spell-check, swift-package-test, cocoapods-test, ci]
     uses: SwiftyLab/ci/.github/workflows/cd.yml@main
     with:
-      swift: '6.0.0'
+      swift: latest
       version: ${{ github.event.inputs.version }}
     secrets:
       COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
